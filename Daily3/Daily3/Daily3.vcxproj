@@ -19,9 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{139FEDA8-FD4F-4F6B-8619-859AFFF7EECB}</ProjectGuid>
+    <ProjectGuid>{5BD120C6-E313-47B9-9A2A-15648E4870E2}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>Daily5</RootNamespace>
+    <RootNamespace>Daily3</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -146,7 +146,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="daily5.cpp" />
+    <ClCompile Include="daily3.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
