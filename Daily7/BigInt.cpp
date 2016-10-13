@@ -1,5 +1,4 @@
 #include"BigInt.h"
-using namespace std;
 
 int main()
 {
@@ -11,6 +10,10 @@ int main()
 	cout << x << endl;
 	x = BigInt("+-4848484848484848");
 	cout << x << endl;
+
+	cout << "Exiting.." << endl;
+
+	system("pause");
 	return 0;
 }
 
@@ -26,14 +29,36 @@ BigInt::BigInt(int x)
 
 BigInt::BigInt(string x)
 {
-	//this->data = x;
+	while (x[0] == ' ' || x[0] == 't') {
+		x.erase(x.begin()); // erase beggining whitespaces
+	}
+
+	unsigned first = x.find(" ");
+	x = x.substr(0, first);  // erase everything after first whitespace
+
+	if (!is_digits(x.substr(1, x.size()))) { // check if the string is not all digits
+		cout << "Tried to construct an invalid BigInt from string: " << endl;
+	}
+	else if (isdigit(x[0]) || x[0] == '+'){ // set the sign
+		this->isNegative = true;
+	}
+	else if (x[0] == '-') {
+		this->isNegative = false;
+	}
+	else{
+		cout << "Tried to construct an invalid BigInt from string: " << endl;
+	}
+	
+	this->data = x;
 }
 
-void proc(BigInt) {
-
-}
-
-ostream & operator<<(ostream & out, const BigInt & right)
+ostream& operator<<(ostream& out, const BigInt& right)
 {
-	// TODO: insert return statement here
+	out << right.data;
+	return out;
+}
+
+bool BigInt::is_digits(const string &str)
+{
+	return str.find_first_not_of("0123456789") == string::npos;
 }
