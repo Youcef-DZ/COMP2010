@@ -12,6 +12,7 @@ public:
 	Rational();
 	Rational(int n);
 	Rational(int n, int d);
+	
 	friend ostream& operator<<(ostream& os, const Rational& r);
 	friend Rational operator+(const Rational &r1, const Rational &r2);
 	friend Rational operator-(const Rational &r1, const Rational &r2);
@@ -29,6 +30,7 @@ public:
 	Rational operator++(int);     // Postfix increment operator.
 	Rational& operator--();       // Prefix decrement operator.
 	Rational operator--(int);     // Postfix decrement operator.
+	
 	int getNum() { return num; }
 	int getDen() { return den; }
 };
