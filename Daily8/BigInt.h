@@ -17,7 +17,7 @@ public:
 	friend BigInt operator-(const BigInt &a, const BigInt &b);
 	friend bool operator< (const BigInt &a, const BigInt &b);
 	friend ostream& operator<<(ostream& out, const BigInt& right);
-	void setDigits(string x);
+	void setDigits(string x, size_t s);
 	bool is_digits(const string &str);
 private:
 	string data;
