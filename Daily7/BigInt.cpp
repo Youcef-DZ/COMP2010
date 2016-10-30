@@ -1,5 +1,5 @@
 #include"BigInt.h"
-
+/*
 int main()
 {
 	BigInt x;
@@ -16,6 +16,7 @@ int main()
 	system("pause");
 	return 0;
 }
+*/
 
 BigInt::BigInt()
 {
@@ -39,16 +40,13 @@ BigInt::BigInt(string x)
 	if (!is_digits(x.substr(1, x.size()))) { // check if the string is not all digits
 		cout << "Tried to construct an invalid BigInt from string: " << endl;
 	}
-	else if (isdigit(x[0]) || x[0] == '+'){ // set the sign
+	else if (x[0] == '-') {
 		this->isNegative = true;
 	}
-	else if (x[0] == '-') {
-		this->isNegative = false;
-	}
-	else{
+	else {
 		cout << "Tried to construct an invalid BigInt from string: " << endl;
 	}
-	
+
 	this->data = x;
 }
 
@@ -57,6 +55,7 @@ ostream& operator<<(ostream& out, const BigInt& right)
 	out << right.data;
 	return out;
 }
+
 
 bool BigInt::is_digits(const string &str)
 {

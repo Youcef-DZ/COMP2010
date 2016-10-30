@@ -1,5 +1,6 @@
 #include<iostream>
 #include<string>
+#include<vector>
 
 #ifndef BIGINT_H
 #define BIGINT_H
@@ -11,11 +12,13 @@ class BigInt
 public:
 	BigInt(); // Initializes the BigInt to zero.
 	BigInt(int x); //Initializes the BigInt to have the same value as x
-	explicit BigInt(string x); //Initalizes the BigInt to have the value of the given string BUT
+	explicit BigInt(string x); //Initalizes the BigInt to have the value of the given string
 	friend ostream& operator<<(ostream& out, const BigInt& right);
 	bool is_digits(const string &str);
 private:
 	string data;
-	bool isNegative;
+	bool isNegative = false;	 // positive by default
+	vector<int> allDigits;		 // vector of all digits
+	int numDigits;				 // number of digits in data string
 };
 #endif
