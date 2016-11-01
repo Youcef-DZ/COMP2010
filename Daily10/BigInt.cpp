@@ -253,11 +253,11 @@ void BigInt::setDigits(string x, size_t s)
 {
 	isNegative = (x.find("-") == 0);	// set sign boolean
 	x = x.substr(x.size() - s, s);		// remove sign from string
-	numDigits = x.size();				// set number of digits
-	data = x;							// set string
+	numDigits = x.size();			// set number of digits
+	data = x;				// set string
 
 	for (int i = 0; i < numDigits; i++) {
-		allDigits.push_back(x[i]);		// push each digit to vector
+		allDigits.push_back(x[i]);	// push each digit to vector
 	}
 }
 
