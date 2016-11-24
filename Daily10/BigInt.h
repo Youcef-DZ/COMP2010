@@ -1,6 +1,7 @@
 #include<iostream>
 #include<string>
 #include<vector>
+#include <limits>
 
 #ifndef BIGINT_H
 #define BIGINT_H
@@ -28,6 +29,6 @@ private:
 	string data;
 	bool isNegative = false; // number is positive if not set
 	vector<int> allDigits; // vector of all digits
-	int numDigits; // number of digits in data string
+	unsigned int numDigits; // number of digits in data string
 };
 #endif

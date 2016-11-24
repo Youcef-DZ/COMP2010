@@ -1,11 +1,12 @@
 #include"BigInt.h"
+
 /*
 int main()
 {
 	BigInt a("2205");
-	BigInt b("50");
+	BigInt b("0");
 	cout << a << " / " << b << endl <<
-		"Expecting 10\n      got " << a/b << endl;
+		"Expecting 10\n      got " << a / b << endl;
 
 	system("pause");
 	return 0;
@@ -18,7 +19,7 @@ BigInt::BigInt()
 
 BigInt::BigInt(int x)
 {
-	this->data = to_string(x);
+	BigInt(to_string(x));
 }
 
 BigInt::BigInt(string x)
@@ -45,7 +46,8 @@ BigInt operator+(BigInt const & a, BigInt const & b)
 	string resultStr = "";
 	if ((!a.isNegative) && (!b.isNegative)) { // if both BigInts are positive
 		vector<string> newData;
-		int i, it, j, k, n, carry = 0;
+		unsigned int i, it, j, k;
+		int n, carry = 0;
 		string str1, str2;
 		it = (a.numDigits >= b.numDigits) ? a.numDigits : b.numDigits;
 
@@ -104,7 +106,8 @@ BigInt operator-(BigInt const & a, BigInt const & b)
 
 	if ((!left.isNegative) && (!right.isNegative)) { // if both BigInts are positive
 		vector<string> newData;
-		int i, it, j, k, n=0, carry = 0;
+		unsigned int i, it, j, k;
+		int n = 0, carry = 0;
 		string str1, str2;
 		it = (left.numDigits >= right.numDigits) ? left.numDigits : right.numDigits;
 
@@ -153,8 +156,8 @@ BigInt operator*(const BigInt & a, const BigInt & b)
 {
 	BigInt result(0);
 
-	for (long long int x = 1; x <= a.numDigits; ++x) {
-		for (long long int y = 1; y <= b.numDigits; ++y) {
+	for (unsigned int x = 1; x <= a.numDigits; ++x) {
+		for (unsigned int y = 1; y <= b.numDigits; ++y) {
 			int digit1 = a.allDigits[a.numDigits - x] - '0';
 			int digit2 = b.allDigits[b.numDigits - y] - '0';
 			int mul = digit1*digit2;
@@ -179,10 +182,15 @@ BigInt operator/(const BigInt & a, const BigInt & b)
 	BigInt temp1 = a; temp1.isNegative = false;
 	BigInt temp2 = b; temp2.isNegative = false;
 
-	if (a.numDigits < b.numDigits) { return BigInt("0"); }
+	if (b == BigInt("0")) {
+		int intMax = numeric_limits<int>::max(); // dividing by zero will return the max value of int
+		if (a < BigInt("0")) { intMax = numeric_limits<int>::min(); }
+		return BigInt(to_string(intMax));
+	}
+	else if (a.numDigits < b.numDigits) { return BigInt("0"); }
 	else if (a == b) { return BigInt("1"); }
 	else if (temp1 == temp2) { return BigInt("-1"); }
-	else if (temp1 > temp2) {
+	else {
 
 		BigInt result = BigInt("1");
 		do {
@@ -201,15 +209,17 @@ bool operator<(const BigInt & a, const BigInt & b)
 {
 	string str1 = a.data, str2 = b.data;
 
-	if (a.isNegative && !b.isNegative) return true;  // a<b
-	else if (!a.isNegative && b.isNegative) return false; // a>b
+	if (a.isNegative && !b.isNegative) { return true; }  // a<b
+	else if (!a.isNegative && b.isNegative) { return false; } // a>b
 	else if (a.isNegative && b.isNegative) { 	// both negative
 		if (str1.size() < str2.size()) { return false; }
 		else if (str2.size() < str1.size()) { return true; }
 		else {
-			if (str1 == str2) return true; // strings are equal
-			for (int i = 0; i < str1.size(); ++i) {
-				return str2[i] < str1[i];
+			if (str1 == str2) { return true; } // strings are equal
+			else {
+				for (unsigned int i = 0; i < str1.size(); ++i) {
+					return str2[i] < str1[i];
+				}
 			}
 		}
 	}
@@ -218,9 +228,11 @@ bool operator<(const BigInt & a, const BigInt & b)
 	else if (str1.size() < str2.size()) { return true; }
 	else if (str2.size() < str1.size()) { return false; }
 	else { // same size 
-		if (str1 == str2) return false; // strings are equal
-		for (int i = 0; i < str1.size(); ++i) {
-			return str1[i] < str2[i];
+		if (str1 == str2) { return false; } // strings are equal
+		else {
+			for (unsigned int i = 0; i < str1.size(); ++i) {
+				return str1[i] < str2[i];
+			}
 		}
 	}
 }
@@ -232,10 +244,7 @@ bool operator>(const BigInt & a, const BigInt & b)
 
 bool operator==(const BigInt & a, const BigInt & b)
 {
-	if ((a.isNegative && !b.isNegative) || (!a.isNegative && b.isNegative)) return false; // diffrent sign
-	if (a.numDigits != b.numDigits) return false; // diffrent size
-
-	if (a.data == b.data) return true;
+	return (a.data == b.data) && (a.isNegative == b.isNegative);
 }
 
 ostream& operator<<(ostream& out, const BigInt& right)
@@ -256,7 +265,7 @@ void BigInt::setDigits(string x, size_t s)
 	numDigits = x.size();				// set number of digits
 	data = x;							// set string
 
-	for (int i = 0; i < numDigits; i++) {
+	for (unsigned int i = 0; i < numDigits; i++) {
 		allDigits.push_back(x[i]);		// push each digit to vector
 	}
 }
